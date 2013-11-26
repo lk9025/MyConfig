@@ -1,5 +1,18 @@
-"-- vundle setting --
-set nocompatible              " be iMproved
+" no vi-compatible
+set nocompatible
+
+" -- vundle settings --
+" setting up vundle - the vim plugin bundler
+let iCanHazVundle=1
+let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
+if !filereadable(vundle_readme)
+    echo "Installing Vundle..."
+    echo ""
+    silent !mkdir -p ~/.vim/bundle
+	silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+	let iCanHazVundle=0
+endif
+
 filetype off                  " required!
 
 set rtp+=~/.vim/bundle/vundle/
@@ -8,10 +21,17 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 Bundle 'vim-scripts/ctags.vim'
 Bundle 'vim-scripts/taglist.vim'
-Bundle 'vim-scripts/bufexplorer.zip'
 Bundle 'vim-scripts/winmanager'
 Bundle 'Shougo/neocomplcache.vim'
 Bundle 'scrooloose/nerdtree'
+Bundle 'scrooloose/syntastic'
+
+" installing plugins the first time
+if iCanHazVundle == 0
+    echo "Installing Bundles, please ignore key map error messages"
+    echo ""
+    :BundleInstall
+endif
 
 filetype plugin indent on     " required!
 
@@ -50,6 +70,7 @@ endfunction
 set shiftwidth=4
 set softtabstop=4
 set tabstop=4
+set expandtab
 set shortmess=atI
 set t_Co=256
 set nu
